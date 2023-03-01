@@ -25,9 +25,9 @@ const CallSchema = new Schema({
       return id;
     }
   },
-  stalls: [{
+  tables: [{
     type: Schema.Types.ObjectId,
-    ref: 'Stall'
+    ref: 'Table'
   }],
   users: [{
     type: Schema.Types.ObjectId,

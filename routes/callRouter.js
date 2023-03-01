@@ -1,4 +1,5 @@
 const Call = require('../models/Calls');
+const Block = require('../models/Blocks');
 
 const getCall = async (req,res) => {
     const {callId} = req.body;
@@ -13,13 +14,17 @@ const getCall = async (req,res) => {
   };
 
  const createCall =  async (req,res) => {
-    const {callLogo,callName,Owner} = req.body;
+    const {logo,name,Owner} = req.body;
     try{
       const userDoc = await Call.create({
-        callLogo:callLogo,
-        callName:callName,
+        callLogo:logo,
+        callName:name,
         Owner:Owner,
       });
+      const blockDoc = await Block.findOneAndUpdate(
+        { $addToSet: { calls: userDoc._id } },
+        { new: true }
+      );
       res.json(userDoc);
     } catch(e) {
       console.log(e);

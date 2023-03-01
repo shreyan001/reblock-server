@@ -1,4 +1,5 @@
 const Floor = require('../models/Floors');
+const Block = require('../models/Blocks');
 
 const getFloor = async (req,res) => {
     const {floorId} = req.body;
@@ -8,18 +9,21 @@ const getFloor = async (req,res) => {
       else {
         res.json({userDoc});
       }
-  
-     
   };
 
  const createFloor =  async (req,res) => {
-    const {floorLogo,floorName,Owner} = req.body;
+    const {name,logo,Owner} = req.body;
     try{
       const userDoc = await Floor.create({
-        floorLogo:floorLogo,
-        floorName:floorName,
+        floorLogo:name,
+        floorName:logo,
         Owner:Owner,
       });
+      const blockDoc = await Block.findOneAndUpdate(
+        { $addToSet: { floors: userDoc._id } },
+        { new: true }
+      );
+  
       res.json(userDoc);
     } catch(e) {
       console.log(e);

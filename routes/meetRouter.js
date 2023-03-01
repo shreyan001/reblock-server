@@ -14,17 +14,16 @@ const getMeet = async (req,res) => {
   };
 
   const createMeet = async (req, res) => {
-    const { meetLogo, meetName, Owner, blockId } = req.body;
+    const { logo, name, Owner } = req.body;
     try {
       const meetDoc = await Meet.create({
-        meetLogo: meetLogo,
-        meetName: meetName,
+        meetLogo: logo,
+        meetName: name,
         Owner: Owner,
       });
   
       // Find the corresponding block and add the meet to its 'meets' array
       const blockDoc = await Block.findOneAndUpdate(
-        blockId,
         { $addToSet: { meets: meetDoc._id } },
         { new: true }
       );

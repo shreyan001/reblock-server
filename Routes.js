@@ -44,8 +44,8 @@ router.post('/api/users/', userController.getUsersByaddr);
 router.post('/api/calls', callController.createCall);
 router.post('/api/calls/get', callController.getCall);
 
-router.post('/api/floor', floorController.createFloor);
-router.post('/api/floor/get', floorController.getFloor);
+router.post('/api/floors', floorController.createFloor);
+router.post('/api/floors/get', floorController.getFloor);
 
 router.post('/api/meets', meetController.createMeet);
 router.post('/api/meets/get', meetController.getMeet);
