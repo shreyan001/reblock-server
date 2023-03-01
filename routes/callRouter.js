@@ -21,10 +21,14 @@ const getCall = async (req,res) => {
         callName:name,
         Owner:Owner,
       });
-      const blockDoc = await Block.findOneAndUpdate(
-        { $addToSet: { calls: userDoc._id } },
-        { new: true }
-      );
+      const blockId = "63fc3a96a61ccbd5b1ab0c73"
+      // Find the corresponding block and add the meet to its 'meets' array
+      const blockDoc = await Block.findByIdAndUpdate(
+        blockId,
+      { $addToSet: { meets: userDoc._id } },
+      { new: true }
+    );
+  
       res.json(userDoc);
     } catch(e) {
       console.log(e);

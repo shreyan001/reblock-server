@@ -15,14 +15,17 @@ const getFloor = async (req,res) => {
     const {name,logo,Owner} = req.body;
     try{
       const userDoc = await Floor.create({
-        floorLogo:name,
-        floorName:logo,
+        floorLogo:logo,
+        floorName:name,
         Owner:Owner,
       });
-      const blockDoc = await Block.findOneAndUpdate(
-        { $addToSet: { floors: userDoc._id } },
-        { new: true }
-      );
+      const blockId = "63fc3a96a61ccbd5b1ab0c73"
+      // Find the corresponding block and add the meet to its 'meets' array
+      const blockDoc = await Block.findByIdAndUpdate(
+        blockId,
+      { $addToSet: { meets: userDoc._id } },
+      { new: true }
+    );
   
       res.json(userDoc);
     } catch(e) {

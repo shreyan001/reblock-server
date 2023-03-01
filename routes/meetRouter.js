@@ -21,12 +21,13 @@ const getMeet = async (req,res) => {
         meetName: name,
         Owner: Owner,
       });
-  
+       const blockId = "63fc3a96a61ccbd5b1ab0c73"
       // Find the corresponding block and add the meet to its 'meets' array
-      const blockDoc = await Block.findOneAndUpdate(
-        { $addToSet: { meets: meetDoc._id } },
-        { new: true }
-      );
+      const blockDoc = await Block.findByIdAndUpdate(
+        blockId,
+      { $addToSet: { meets: meetDoc._id } },
+      { new: true }
+    );
   
       res.json(meetDoc);
     } catch (e) {
